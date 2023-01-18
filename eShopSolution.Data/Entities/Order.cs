@@ -16,6 +16,7 @@ namespace eShopSolution.Data.Entities
         public string ShipPhoneNumber { set; get; }
         public OrderStatus Status { set; get; }
 
+        //Làm khóa ngoại
         public List<OrderDetail> OrderDetails { get; set; }
     }
 }

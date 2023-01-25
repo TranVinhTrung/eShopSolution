@@ -18,5 +18,8 @@ namespace eShopSolution.Data.Entities
 
         //Làm khóa ngoại
         public List<OrderDetail> OrderDetails { get; set; }
+
+        //Khóa ngoại
+        public AppUser AppUser { get; set; }
     }
 }

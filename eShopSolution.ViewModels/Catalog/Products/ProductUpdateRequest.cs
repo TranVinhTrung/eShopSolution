@@ -1,14 +1,13 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace eShopSolution.Data.Entities
-{
-    public class ProductTranslation
+namespace eShopSolution.ViewModels.Catalog.Products
+{ 
+    public class ProductUpdateRequest
     {
-        public int Id { set; get; }
-
-        public int ProductId { set; get; }
+        public int Id { get; set; }
 
         public string Name { set; get; }
 
@@ -24,8 +23,6 @@ namespace eShopSolution.Data.Entities
 
         public string LanguageId { set; get; }
 
-        public Product Product { get; set; }
-
-        public Language Language { get; set; }
+        public IFormFile ThumbnailImage { get; set; }
     }
 }

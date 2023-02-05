@@ -88,7 +88,7 @@ namespace eShopSolution.BackendApi.Controllers
 
         //Images---------------------------------------------------------------------------------------------
 
-        [HttpPost("{productId}/images}")]
+        [HttpPost("{productId}/images")]
         public async Task<IActionResult> CreateImage(int productId, [FromForm] ProductImageCreateRequest request)
         {
             if (!ModelState.IsValid)

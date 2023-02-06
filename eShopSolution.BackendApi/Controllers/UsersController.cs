@@ -26,6 +26,8 @@ namespace eShopSolution.BackendApi.Controllers
         public async Task<IActionResult> Authenticate([FromForm] LoginRequest request)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
+            return BadRequest(ModelState);
+
             var resultToken = await _userService.Authencate(request);
             if (string.IsNullOrEmpty(resultToken))
             {

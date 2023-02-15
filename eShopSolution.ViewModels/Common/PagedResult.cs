@@ -8,6 +8,6 @@ namespace eShopSolution.ViewModels.Common
     {
         public List<T> Items { set; get; }
 
-        public int TotalRecord { get; set; }
+        public int TotalRecord { set; get; }
     }
 }

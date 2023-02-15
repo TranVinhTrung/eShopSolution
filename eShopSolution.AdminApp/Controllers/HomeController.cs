@@ -10,8 +10,8 @@ using System.Threading.Tasks;
 
 namespace eShopSolution.AdminApp.Controllers
 {
-    [Authorize] //Không cho vào trang chủ khi chưa đăng nhập
-    public class HomeController : Controller
+    //[Authorize] //Không cho vào trang chủ khi chưa đăng nhập
+    public class HomeController : BaseController
     {
         private readonly ILogger<HomeController> _logger;
 
@@ -22,6 +22,7 @@ namespace eShopSolution.AdminApp.Controllers
 
         public IActionResult Index()
         {
+            var user = User.Identity.Name;
             return View();
         }
 

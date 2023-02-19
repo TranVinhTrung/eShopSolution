@@ -19,6 +19,7 @@ namespace eShopSolution.ViewModels.System.Users
         [DataType(DataType.Date)]
         public DateTime Dob { get; set; }
 
+        [Display(Name = "Email")]
         public string Email { get; set; }
 
         [Display(Name = "SĐT")]

@@ -17,11 +17,13 @@ namespace eShopSolution.AdminApp.Services
         private readonly IConfiguration _configuration;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public UserApiClient(IHttpClientFactory httpClientFactory, IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
+        public UserApiClient(IHttpClientFactory httpClientFactory,
+            IConfiguration configuration,
+            IHttpContextAccessor httpContextAccessor)
         {
-            _httpClientFactory = httpClientFactory;
             _configuration = configuration;
             _httpContextAccessor = httpContextAccessor;
+            _httpClientFactory = httpClientFactory;
         }
 
         public async Task<ApiResult<string>> Authenticate(LoginRequest request)

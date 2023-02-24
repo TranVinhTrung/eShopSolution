@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace eShopSolution.Data.Migrations
 {
-    public partial class Initial : Migration
+    public partial class intial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -447,7 +447,7 @@ namespace eShopSolution.Data.Migrations
             migrationBuilder.InsertData(
                 table: "AppRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Description", "Name", "NormalizedName" },
-                values: new object[] { new Guid("2f35d00e-6ef3-435e-9799-f374dce8f54a"), "7ba2def9-15b1-4613-99b5-ed2792cc3033", "Administrator role", "admin", "admin" });
+                values: new object[] { new Guid("2f35d00e-6ef3-435e-9799-f374dce8f54a"), "7d5ad6c4-e1b3-48e9-bb61-e44217ad172a", "Administrator role", "admin", "admin" });
 
             migrationBuilder.InsertData(
                 table: "AppUserRoles",
@@ -457,7 +457,7 @@ namespace eShopSolution.Data.Migrations
             migrationBuilder.InsertData(
                 table: "AppUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Dob", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { new Guid("1de6536a-ed8d-4337-b12b-5dcff625548f"), 0, "9b0b2e89-6ed9-4c17-afea-905295664df1", new DateTime(2024, 1, 31, 0, 0, 0, 0, DateTimeKind.Unspecified), "vinhtrung5555@gmail.com", true, "Vinh", "Trung", false, null, "vinhtrung5555@gmail.com", "admin", "AQAAAAEAACcQAAAAEBp9w0CY+LRWKrTet5Jl+h7eXdtnffPs96H13oDckdA/TM8hYkVfbDjvrviPwi4aRg==", null, false, "", false, "admin" });
+                values: new object[] { new Guid("1de6536a-ed8d-4337-b12b-5dcff625548f"), 0, "26ff0258-fbb7-418f-9be5-8159b446fc82", new DateTime(2024, 1, 31, 0, 0, 0, 0, DateTimeKind.Unspecified), "vinhtrung5555@gmail.com", true, "Vinh", "Trung", false, null, "vinhtrung5555@gmail.com", "admin", "AQAAAAEAACcQAAAAENkGbFm6CQf8Lt2QiNQdEYqf57Wu76YloVm7lnaCTWcYnCGYtboj/h0JzAS9NCjKmg==", null, false, "", false, "admin" });
 
             migrationBuilder.InsertData(
                 table: "Categories",
@@ -480,7 +480,7 @@ namespace eShopSolution.Data.Migrations
             migrationBuilder.InsertData(
                 table: "Products",
                 columns: new[] { "Id", "DateCreated", "OriginalPrice", "Price" },
-                values: new object[] { 1, new DateTime(2023, 2, 24, 10, 30, 15, 586, DateTimeKind.Local).AddTicks(3046), 100000m, 200000m });
+                values: new object[] { 1, new DateTime(2023, 2, 24, 20, 31, 15, 137, DateTimeKind.Local).AddTicks(7382), 100000m, 200000m });
 
             migrationBuilder.InsertData(
                 table: "CategoryTranslations",

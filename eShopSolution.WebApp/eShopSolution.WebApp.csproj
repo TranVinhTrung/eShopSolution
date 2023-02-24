@@ -5,6 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="LazZiya.ExpressLocalization" Version="4.0.2" />
+    <PackageReference Include="LazZiya.TagHelpers" Version="4.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Update="appsettings.Development.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>

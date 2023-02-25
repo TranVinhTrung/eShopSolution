@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace eShopSolution.ViewModels.Catalog.Products
-{ 
+{
     public class ProductUpdateRequest
     {
         public int Id { get; set; }
@@ -22,6 +22,8 @@ namespace eShopSolution.ViewModels.Catalog.Products
         public string SeoAlias { get; set; }
 
         public string LanguageId { set; get; }
+
+        public bool? IsFeatured { get; set; }
 
         public IFormFile ThumbnailImage { get; set; }
     }

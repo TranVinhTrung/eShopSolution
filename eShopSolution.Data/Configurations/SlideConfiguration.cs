@@ -7,11 +7,11 @@ using System.Text;
 
 namespace eShopSolution.Data.Configurations
 {
-    public class ContactConfiguration : IEntityTypeConfiguration<Contact>
+    public class SlideConfiguration : IEntityTypeConfiguration<Slide>
     {
-        public void Configure(EntityTypeBuilder<Contact> builder)
+        public void Configure(EntityTypeBuilder<Slide> builder)
         {
-            builder.ToTable("Contects");
+            builder.ToTable("Slides");
 
             builder.HasKey(x => x.Id);
 
@@ -19,11 +19,11 @@ namespace eShopSolution.Data.Configurations
 
             builder.Property(x => x.Name).HasMaxLength(200).IsRequired();
 
-            builder.Property(x => x.Email).HasMaxLength(200).IsRequired();
+            builder.Property(x => x.Description).HasMaxLength(200).IsRequired();
 
-            builder.Property(x => x.PhoneNumber).HasMaxLength(200).IsRequired();
+            builder.Property(x => x.Url).HasMaxLength(200).IsRequired();
 
-            builder.Property(x => x.Message).IsRequired();
+            builder.Property(x => x.Image).HasMaxLength(200).IsRequired();
         }
     }
 }

@@ -46,6 +46,15 @@ namespace eShopSolution.BackendApi.Controllers
             return Ok(products);
         }
 
+        [HttpGet("latest/{languageId}/{take}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetLatestProducts(int take, string languageId)
+        {
+            var products = await _productService.GetLatestProducts(languageId, take);
+
+            return Ok(products);
+        }
+
         [HttpPost]
         [Consumes("multipart/form-data")] //Cho phép nhận kiểu dữ liệu
         public async Task<IActionResult> Create([FromForm] ProductCreateRequest request)

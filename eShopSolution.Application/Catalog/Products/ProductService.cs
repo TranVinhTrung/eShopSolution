@@ -1,6 +1,7 @@
 ﻿using eShopSolution.Application.Commom;
 using eShopSolution.Data.EF;
 using eShopSolution.Data.Entities;
+using eShopSolution.Utilities.Constants;
 using eShopSolution.Utilities.Exceptions;
 using eShopSolution.ViewModels.Catalog.ProductImages;
 using eShopSolution.ViewModels.Catalog.Products;
@@ -59,17 +60,13 @@ namespace eShopSolution.Application.Catalog.Products
 
         public async Task<int> Create(ProductCreateRequest request)
         {
-            var product = new Product()
+            var languages = _context.Languages;
+            var translation = new List<ProductTranslation>();
+            foreach (var language in languages)
             {
-                Price = request.Price,
-                OriginalPrice = request.OriginalPrice,
-                Stock = request.Stock,
-                ViewCount = 0,
-                DateCreated = DateTime.Now,
-
-                ProductTranslations = new List<ProductTranslation>()
+                if (language.Id == request.LanguageId)
                 {
-                    new ProductTranslation()
+                    translation.Add(new ProductTranslation()
                     {
                         Name = request.Name,
                         Description = request.Description,
@@ -78,8 +75,29 @@ namespace eShopSolution.Application.Catalog.Products
                         SeoAlias = request.SeoAlias,
                         SeoTitle = request.SeoTitle,
                         LanguageId = request.LanguageId
-                    }
+                    });
                 }
+                else
+                {
+                    translation.Add(new ProductTranslation()
+                    {
+                        Name = SystemConstants.ProductConstants.NA,
+                        Description = SystemConstants.ProductConstants.NA,
+                        SeoAlias = SystemConstants.ProductConstants.NA,
+                        LanguageId = language.Id
+                    });
+                }
+            }
+
+            var product = new Product()
+            {
+                Price = request.Price,
+                OriginalPrice = request.OriginalPrice,
+                Stock = request.Stock,
+                ViewCount = 0,
+                DateCreated = DateTime.Now,
+
+                ProductTranslations = translation
             };
 
             //Save image

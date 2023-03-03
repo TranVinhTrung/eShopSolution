@@ -1,6 +1,9 @@
-using eShopSolution.ApiIntegration;
+﻿using eShopSolution.ApiIntegration;
+using eShopSolution.ViewModels.System.Users;
 using eShopSolution.WebApp.LocalizationResources;
+using FluentValidation.AspNetCore;
 using LazZiya.ExpressLocalization;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -37,6 +40,7 @@ namespace eShopSolution.WebApp
             };
 
             services.AddControllersWithViews()
+                 .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>())
                 .AddExpressLocalization<ExpressLocalizationResource, ViewLocalizationResource>(ops =>
                 {
                     // When using all the culture providers, the localization process will
@@ -66,6 +70,13 @@ namespace eShopSolution.WebApp
                         o.DefaultRequestCulture = new RequestCulture("vi");
                     };
                 });
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
+            {
+                options.LoginPath = "/Account/Login";   // Về link này khi chưa đăng nhập
+                options.AccessDeniedPath = "/User/Forbidden/"; //Bị gì đó thì về trang này
+            });
+
             services.AddSession(options =>
             {
                 options.IdleTimeout = TimeSpan.FromMinutes(30);
@@ -74,6 +85,7 @@ namespace eShopSolution.WebApp
             services.AddTransient<ISlideApiClient, SlideApiClient>();
             services.AddTransient<IProductApiClient, ProductApiClient>();
             services.AddTransient<ICategoryApiClient, CategoryApiClient>();
+            services.AddTransient<IUserApiClient, UserApiClient>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -91,6 +103,7 @@ namespace eShopSolution.WebApp
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseAuthentication();
 
             app.UseRouting();
 
@@ -101,7 +114,7 @@ namespace eShopSolution.WebApp
             {
                 endpoints.MapControllerRoute(
                     name: "Product Category En",
-                    pattern: "{culture=vi}/categories/{id}", new
+                    pattern: "{culture}/categories/{id}", new
                     {
                         controller = "Product",
                         action = "Category"
@@ -109,7 +122,7 @@ namespace eShopSolution.WebApp
 
                 endpoints.MapControllerRoute(
                     name: "Product Category Vn",
-                    pattern: "{culture=vi}/danh-muc/{id}", new
+                    pattern: "{culture}/danh-muc/{id}", new
                     {
                         controller = "Product",
                         action = "Category"
@@ -117,7 +130,7 @@ namespace eShopSolution.WebApp
 
                 endpoints.MapControllerRoute(
                     name: "Product Detail En",
-                    pattern: "{culture=vi}/products/{id}", new
+                    pattern: "{culture}/products/{id}", new
                     {
                         controller = "Product",
                         action = "Detail"
@@ -125,7 +138,7 @@ namespace eShopSolution.WebApp
 
                 endpoints.MapControllerRoute(
                     name: "Product Detail Vn",
-                    pattern: "{culture=vi}/san-pham/{id}", new
+                    pattern: "{culture}/san-pham/{id}", new
                     {
                         controller = "Product",
                         action = "Detail"

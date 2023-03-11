@@ -1,4 +1,5 @@
 ﻿using eShopSolution.ViewModels.System.Languages;
+using eShopSolution.ViewModels.Utilities.Slides;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,5 +12,7 @@ namespace eShopSolution.AdminApp.Models
         public List<LanguageVm> Languages { get; set; }
 
         public string CurrentLanguageId { get; set; }
+
+        public string ReturnUrl { get; set; }
     }
 }

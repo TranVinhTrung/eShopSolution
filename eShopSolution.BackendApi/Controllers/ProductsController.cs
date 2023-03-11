@@ -10,7 +10,6 @@ namespace eShopSolution.BackendApi.Controllers
     //api/products
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class ProductsController : ControllerBase
     {
         private readonly IProductService _productService;
@@ -20,11 +19,10 @@ namespace eShopSolution.BackendApi.Controllers
             _productService = productService;
         }
 
-        //http://localhost:post/products?pageIndex=1&pageSize=10&CategoryId=
-        [HttpGet("{languageId}")]
-        public async Task<IActionResult> GetAllPaging(string languageId, [FromQuery] GetPublicProductPagingRequest request)
+        [HttpGet("paging")]
+        public async Task<IActionResult> GetAllPaging([FromQuery] GetManageProductPagingRequest request)
         {
-            var products = await _productService.GetAllByCategoryId(languageId, request);
+            var products = await _productService.GetAllPaging(request);
             return Ok(products);
         }
 
@@ -38,7 +36,27 @@ namespace eShopSolution.BackendApi.Controllers
             return Ok(product);
         }
 
+        [HttpGet("featured/{languageId}/{take}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetFeaturedProducts(int take, string languageId)
+        {
+            var products = await _productService.GetFeaturedProducts(languageId, take);
+
+            return Ok(products);
+        }
+
+        [HttpGet("latest/{languageId}/{take}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetLatestProducts(int take, string languageId)
+        {
+            var products = await _productService.GetLatestProducts(languageId, take);
+
+            return Ok(products);
+        }
+
         [HttpPost]
+        [Consumes("multipart/form-data")] //Cho phép nhận kiểu dữ liệu
+        [Authorize]
         public async Task<IActionResult> Create([FromForm] ProductCreateRequest request)
         {
             if (!ModelState.IsValid)
@@ -54,13 +72,17 @@ namespace eShopSolution.BackendApi.Controllers
             return CreatedAtAction(nameof(GetById), new { id = productId }, product);
         }
 
-        [HttpPut]
-        public async Task<IActionResult> Update([FromForm] ProductUpdateRequest request)
+        [HttpPut("{productId}")]
+        [Consumes("multipart/form-data")] //Cho phép nhận kiểu dữ liệu
+        [Authorize]
+        public async Task<IActionResult> Update([FromRoute] int productId, [FromForm] ProductUpdateRequest request)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
+
+            request.Id = productId;
             var affectedResult = await _productService.Update(request);
             if (affectedResult == 0)
                 return BadRequest();
@@ -68,6 +90,7 @@ namespace eShopSolution.BackendApi.Controllers
         }
 
         [HttpDelete("{productId}")]
+        [Authorize]
         public async Task<IActionResult> Delete(int productId)
         {
             var affectedResult = await _productService.Delete(productId);
@@ -78,6 +101,7 @@ namespace eShopSolution.BackendApi.Controllers
 
         //Update 1 phần của bảng ghi
         [HttpPatch("{productId}/{newPrice}")]
+        [Authorize]
         public async Task<IActionResult> UpdatePrice(int productId, decimal newPrice)
         {
             var isSuccessful = await _productService.UpdatePrice(productId, newPrice);
@@ -105,6 +129,7 @@ namespace eShopSolution.BackendApi.Controllers
         }
 
         [HttpPut("{productId}/images/{imageId}")]
+        [Authorize]
         public async Task<IActionResult> UpdateImage(int imageId, [FromForm] ProductImageUpdateRequest request)
         {
             if (!ModelState.IsValid)
@@ -119,6 +144,7 @@ namespace eShopSolution.BackendApi.Controllers
         }
 
         [HttpDelete("{productId}/images/{imageId}")]
+        [Authorize]
         public async Task<IActionResult> RemoveImage(int imageId)
         {
             if (!ModelState.IsValid)
@@ -139,6 +165,21 @@ namespace eShopSolution.BackendApi.Controllers
             if (image == null)
                 return BadRequest("Cannot find image");
             return Ok(image);
+        }
+
+        [HttpPut("{id}/categories")]
+        [Authorize]
+        public async Task<IActionResult> CategoryAssign(int id, [FromBody] CategoryAssignRequest request)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var result = await _productService.CategoryAssign(id, request);
+            if (!result.IsSuccessed)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
         }
     }
 }
